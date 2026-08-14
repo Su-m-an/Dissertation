@@ -1,6 +1,6 @@
 Metric,Value
-Accuracy,0.55
-Precision,1.0
-Recall,0.1
-F1 Score,0.18181818181818182
-AUC,0.99444825
+Accuracy,0.97
+Precision,0.9497607655502392
+Recall,0.9925
+F1 Score,0.9706601466992665
+AUC,0.9981

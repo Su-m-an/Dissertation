@@ -6,6 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
@@ -18,6 +19,11 @@ import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader
+
+SEED = 42
+
+torch.manual_seed(SEED)
+np.random.seed(SEED)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -32,7 +38,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
     test_size=0.20,
-    random_state=42,
+    random_state=SEED,
     stratify=y
 )
 
@@ -40,9 +46,17 @@ X_train, X_val, y_train, y_val = train_test_split(
     X_train,
     y_train,
     test_size=0.20,
-    random_state=42,
+    random_state=SEED,
     stratify=y_train
 )
+
+# Standardise using statistics from the training split only
+
+scaler = StandardScaler()
+
+X_train = scaler.fit_transform(X_train).astype(np.float32)
+X_val = scaler.transform(X_val).astype(np.float32)
+X_test = scaler.transform(X_test).astype(np.float32)
 
 X_train = torch.tensor(X_train).unsqueeze(-1)
 X_val = torch.tensor(X_val).unsqueeze(-1)

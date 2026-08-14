@@ -1,3 +1,13 @@
+"""
+13_lstm.py
+
+Superseded by 13_lstm_final.py, which adds a validation split and early
+stopping. results/lstm_metrics.csv and figures/lstm_training_loss.png are
+overwritten by whichever of the two scripts runs last — the current
+results/ files were produced by 13_lstm_final.py. Kept for reference only;
+prefer 13_lstm_final.py.
+"""
+
 import time
 
 import numpy as np
@@ -5,6 +15,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
@@ -17,6 +28,11 @@ import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader
+
+SEED = 42
+
+torch.manual_seed(SEED)
+np.random.seed(SEED)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -31,9 +47,16 @@ X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
     test_size=0.20,
-    random_state=42,
+    random_state=SEED,
     stratify=y
 )
+
+# Standardise the sequence features before feeding them to the LSTM
+
+scaler = StandardScaler()
+
+X_train = scaler.fit_transform(X_train).astype(np.float32)
+X_test = scaler.transform(X_test).astype(np.float32)
 
 X_train = torch.tensor(X_train).unsqueeze(-1)
 X_test = torch.tensor(X_test).unsqueeze(-1)

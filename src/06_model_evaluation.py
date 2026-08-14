@@ -1,3 +1,5 @@
+import joblib
+
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -120,6 +122,12 @@ with open(
 ) as file:
     file.write(report)
 
+# Save the trained model and scaler so predictions can be reproduced
+# without retraining, consistent with the neural network scripts.
+
+joblib.dump(svm, "saved_models/tc_svm.joblib")
+joblib.dump(scaler, "saved_models/tc_svm_scaler.joblib")
+
 # Plot confusion matrix
 
 plt.figure(figsize=(6,5))
@@ -211,7 +219,7 @@ plt.savefig(
     dpi=300
 )
 
-plt.show()
+plt.close()
 
 print("="*50)
 print("Evaluation completed successfully.")

@@ -1,3 +1,5 @@
+import joblib
+
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -106,6 +108,11 @@ metrics.to_csv(
     index=False
 )
 
+# Save the trained model and scaler for reuse without retraining
+
+joblib.dump(xgb, "saved_models/xgboost.joblib")
+joblib.dump(scaler, "saved_models/xgboost_scaler.joblib")
+
 # Calculate feature importance
 
 importance = pd.DataFrame({
@@ -143,6 +150,6 @@ plt.savefig(
     dpi=300
 )
 
-plt.show()
+plt.close()
 
 print("\nFeature importance saved successfully.")

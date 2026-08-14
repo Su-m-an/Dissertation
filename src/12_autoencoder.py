@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
@@ -18,6 +19,11 @@ import torch.nn as nn
 from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader
 
+SEED = 42
+
+torch.manual_seed(SEED)
+np.random.seed(SEED)
+
 # Select GPU if available, otherwise use CPU
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -28,23 +34,42 @@ print(f"\nUsing device: {device}\n")
 
 dataset = pd.read_csv("Data/ATD_sequence.csv")
 
-# Separate normal and attack samples
+X = dataset.drop("LABEL", axis=1).values.astype(np.float32)
+y = dataset["LABEL"].values.astype(np.float32)
 
-normal = dataset[dataset["LABEL"] == 0]
+# Hold out a genuine test set (both classes) that the model never trains on
 
-attack = dataset[dataset["LABEL"] == 1]
+X_train_full, X_test, y_train_full, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.20,
+    random_state=SEED,
+    stratify=y
+)
 
-# Train only on normal sequences
+# The autoencoder only ever trains on normal sequences from the training split.
+# A slice of those normal sequences is further held back purely to calibrate
+# the anomaly threshold, so the threshold is never chosen using test-set data.
 
-X_train = normal.drop("LABEL", axis=1).values.astype(np.float32)
+X_train_normal = X_train_full[y_train_full == 0]
 
-# Test on both normal and attack sequences
+X_fit, X_threshold_calib = train_test_split(
+    X_train_normal,
+    test_size=0.20,
+    random_state=SEED
+)
 
-X_test = dataset.drop("LABEL", axis=1).values.astype(np.float32)
+# Standardise using statistics from the training split only
 
-y_test = dataset["LABEL"].values.astype(np.float32)
+scaler = StandardScaler()
 
-X_train_tensor = torch.tensor(X_train)
+X_fit = scaler.fit_transform(X_fit).astype(np.float32)
+X_threshold_calib = scaler.transform(X_threshold_calib).astype(np.float32)
+X_test = scaler.transform(X_test).astype(np.float32)
+
+X_train_tensor = torch.tensor(X_fit)
+
+X_threshold_tensor = torch.tensor(X_threshold_calib)
 
 X_test_tensor = torch.tensor(X_test)
 
@@ -141,22 +166,28 @@ training_time = time.time() - start
 
 print("\nTraining completed.")
 
-# Reconstruction
+# Calibrate the anomaly threshold using only held-out *normal* training
+# data (never the test set), then apply that fixed threshold to the test set.
 
 model.eval()
 
 with torch.no_grad():
 
-    reconstructed = model(X_test_tensor.to(device))
+    calib_reconstructed = model(X_threshold_tensor.to(device)).cpu().numpy()
 
-reconstructed = reconstructed.cpu().numpy()
+    reconstructed = model(X_test_tensor.to(device)).cpu().numpy()
+
+calib_errors = np.mean(
+    (X_threshold_calib - calib_reconstructed)**2,
+    axis=1
+)
+
+threshold = np.percentile(calib_errors, 95)
 
 errors = np.mean(
     (X_test - reconstructed)**2,
     axis=1
 )
-
-threshold = np.percentile(errors,95)
 
 predictions = (errors > threshold).astype(int)
 

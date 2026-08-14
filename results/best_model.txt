@@ -1,6 +1,6 @@
 Best Model : LSTM
-Accuracy : 0.9900
-Precision : 0.9925
-Recall : 0.9875
-F1 Score : 0.9900
+Accuracy : 0.9925
+Precision : 0.9950
+Recall : 0.9900
+F1 Score : 0.9925
 AUC : 0.9996

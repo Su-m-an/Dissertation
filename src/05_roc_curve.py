@@ -87,8 +87,11 @@ plt.legend(loc="lower right")
 
 plt.grid(True)
 
-plt.savefig("figures/roc_curve_tc_svm.png", dpi=300)
+# Saved under a distinct name from 06_model_evaluation.py, which also
+# produces a TC-SVM ROC curve (figures/roc_curve_tc_svm.png) — without this
+# the two scripts silently overwrite each other's figure depending on run order.
+plt.savefig("figures/roc_curve_tc_svm_standalone.png", dpi=300)
 
-plt.show()
+plt.close()
 
 print("ROC curve saved inside the figures folder.")

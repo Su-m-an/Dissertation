@@ -36,7 +36,7 @@ plt.legend()
 # Save the figure for the dissertation
 plt.savefig("figures/scatter_mean_ratio.png", dpi=300)
 
-plt.show()
+plt.close()
 
 # Compare the distribution of the MEAN feature
 
@@ -63,7 +63,7 @@ plt.legend()
 
 plt.savefig("figures/mean_distribution.png", dpi=300)
 
-plt.show()
+plt.close()
 
 # Compare the distribution of the RATIO feature
 
@@ -90,7 +90,7 @@ plt.legend()
 
 plt.savefig("figures/ratio_distribution.png", dpi=300)
 
-plt.show()
+plt.close()
 
 print("\nVisualisation completed successfully.")
 print("Figures have been saved in the figures folder.")
