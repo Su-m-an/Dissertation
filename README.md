@@ -20,7 +20,10 @@ an Autoencoder, and an LSTM.
 Full comparison: [`results/final_model_comparison.csv`](results/final_model_comparison.csv).
 See [docs/methodology.md](docs/methodology.md) for the full write-up, including
 statistical significance testing, an SNR-difficulty sweep, and several
-robustness checks beyond this baseline table.
+robustness checks beyond this baseline table. See
+[docs/literature_comparison.md](docs/literature_comparison.md) for how these
+results compare against Hoang et al. (2021), the paper this pipeline is built
+from, including an independent replication of their SNR-sensitivity curve.
 
 ## The physical model
 
