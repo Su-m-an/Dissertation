@@ -1,26 +1,27 @@
 """
 interpretability.py
 
-Uses the Phase 1 tuned models (experiments/phase1_statistical_rigor/models/)
--- no retraining. Three different interpretive vocabularies, deliberately
-NOT interchangeable across model types:
+Uses the Phase 1 tuned models (experiments/phase1_statistical_rigor/models/),
+so there's no retraining here. Three different interpretive vocabularies,
+deliberately not interchangeable across model types:
 
-  Random Forest / XGBoost -- SHAP values (shap.TreeExplainer). These are
-  tree models over 2 features (MEAN, RATIO), so this mainly confirms/
+  Random Forest / XGBoost: SHAP values (shap.TreeExplainer). These are
+  tree models over 2 features (MEAN, RATIO), so this mainly confirms and
   extends the built-in feature-importance figures already in results/
   with per-prediction attribution and directionality.
 
-  LSTM -- has no reconstruction target, so reconstruction-error language
-  does not apply. Instead: (1) timestep occlusion (replace each timestep
-  with the sequence mean, one at a time, measure the drop in predicted
-  probability of the true class), (2) timestep permutation importance
-  (shuffle one timestep's values across the batch, measure the accuracy
-  drop), (3) Integrated Gradients via captum, attributing the prediction
-  back to each of the 50 input timesteps against a zero baseline.
+  LSTM: has no reconstruction target, so reconstruction-error language
+  does not apply. Instead it gets (1) timestep occlusion, replacing each
+  timestep with the sequence mean one at a time and measuring the drop in
+  predicted probability of the true class, (2) timestep permutation
+  importance, shuffling one timestep's values across the batch and
+  measuring the accuracy drop, and (3) Integrated Gradients via captum,
+  attributing the prediction back to each of the 50 input timesteps
+  against a zero baseline.
 
-  Autoencoder -- its native vocabulary IS reconstruction error, used
-  correctly here: per-timestep reconstruction error, decomposed for
-  attack vs. normal test samples, to see which timesteps the model
+  Autoencoder: its native vocabulary really is reconstruction error, used
+  correctly here through per-timestep reconstruction error, decomposed
+  for attack vs. normal test samples to see which timesteps the model
   reconstructs worst when an attack is present.
 """
 

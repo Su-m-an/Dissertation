@@ -7,9 +7,9 @@ cv_tuning_classical.py and cv_tuning_neural.py.
 
 Calibration: reliability diagram (predicted probability vs. observed
 frequency) and precision-recall curve per model, on the held-out test set.
-The autoencoder has no calibration curve -- reconstruction error is not a
-probability -- so it's included in the PR/latency tables but noted as N/A
-for calibration.
+The autoencoder has no calibration curve, since reconstruction error is
+not a probability. It's still included in the PR/latency tables but
+noted as N/A for calibration.
 
 Complexity proxy: PyTorch models report trainable parameter count
 directly. TC-SVM/RF/XGBoost have no directly comparable notion of

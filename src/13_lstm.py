@@ -2,8 +2,8 @@
 13_lstm.py
 
 Superseded by 13_lstm_final.py, which adds a validation split and early
-stopping. results/lstm_metrics.csv and figures/lstm_training_loss.png are
-overwritten by whichever of the two scripts runs last — the current
+stopping. results/lstm_metrics.csv and figures/lstm_training_loss.png get
+overwritten by whichever of the two scripts runs last. The current
 results/ files were produced by 13_lstm_final.py. Kept for reference only;
 prefer 13_lstm_final.py.
 """

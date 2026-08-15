@@ -4,13 +4,13 @@ external_validation_replicates.py
 Extends the original single external-validation run (src/14_external_validation.py,
 Data/ATD_features.csv) to five independent replicates, generated at the
 same baseline parameters (rho_u=rho_E=5) but distinct explicit seeds
-(43-47) via generate_sweep_data.sh -- raw_external/seed_*/ATD_features.csv.
+(43-47) via generate_sweep_data.sh, saved to raw_external/seed_*/ATD_features.csv.
 
-Uses the Phase 1 TUNED classical models directly, unmodified, exactly as
-the original external validation did -- no retraining here, this measures
-generalization of the already-fixed models across independent simulation
-draws. Reports mean +/- SD across replicates instead of a single point
-estimate.
+Uses the Phase 1 tuned classical models directly and unmodified, exactly
+as the original external validation did, so there's no retraining here.
+This measures generalization of the already-fixed models across
+independent simulation draws, reporting mean +/- SD across replicates
+instead of a single point estimate.
 """
 
 import glob

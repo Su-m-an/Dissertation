@@ -2,36 +2,40 @@
 representation_and_sequence_ablation.py
 
 Two research questions, sharing one harness, both built from
-Data/ATD_sequence.csv only (so every representation is computed from the
-SAME 4,000 underlying samples -- a properly paired ablation, rather than
-mixing in Data/ATD.csv's MEAN/RATIO columns, which come from a different,
-larger sample set and can't be paired against E1-E50 truncations).
+Data/ATD_sequence.csv only, so every representation is computed from the
+same 4,000 underlying samples. That makes this a properly paired
+ablation, rather than mixing in Data/ATD.csv's MEAN/RATIO columns, which
+come from a different, larger sample set and can't be paired against
+E1-E50 truncations.
 
   Q1 "Does temporal information actually matter, or is it the
-     architecture?" -- at each sequence length {5,10,20,30,40,50}, train
-     BOTH a non-sequential MLP (flattened input) and a sequential LSTM on
-     the identical truncated data. If LSTM > MLP at every length, that's
-     architecture. If they track each other, the length itself is doing
-     the work, not the recurrence.
+     architecture?" At each sequence length {5,10,20,30,40,50}, train
+     both a non-sequential MLP (flattened input) and a sequential LSTM on
+     the identical truncated data. If LSTM beats MLP at every length,
+     that's architecture. If they track each other, the length itself is
+     doing the work, not the recurrence.
 
-  Q2 "How much information is enough?" (detection latency) -- LSTM
-     accuracy/F1/AUC and inference cost as a function of sequence length.
-     Answers: how many observations before the detector can decide?
+  Q2 "How much information is enough?" (detection latency): LSTM
+     accuracy/F1/AUC and inference cost as a function of sequence length,
+     answering how many observations the detector needs before deciding.
 
-  Q3 Representation richness independent of architecture -- the MLP is
-     additionally run on two aggregate representations: MEAN (mean of
-     all 50 raw values) and MEAN+RATIO_proxy (mean, max/mean). NOTE:
-     Data/ATD.csv's RATIO column formula is not available in this repo
-     (no matlab/ source), so RATIO here is an explicitly-labelled proxy
-     (max/mean, a standard peak-to-average measure), computed from the
-     same ATD_sequence.csv rows -- not a reproduction of ATD.csv's RATIO
-     column, which comes from different, unpaired samples. This keeps
-     the whole representation ladder on one consistent sample set.
+  Q3 Representation richness independent of architecture: the MLP is
+     additionally run on two aggregate representations, MEAN (mean of
+     all 50 raw values) and MEAN+RATIO_proxy (mean, max/mean). The true
+     RATIO formula, recovered later in Phase 3 from the MATLAB source,
+     needs the noise power separately from the combined signal-plus-noise
+     power that ATD_sequence.csv actually stores, so it still can't be
+     reconstructed from this file even now that the formula is known.
+     RATIO here is therefore an explicitly labelled proxy (max/mean, a
+     standard peak-to-average measure) computed from the same
+     ATD_sequence.csv rows, not a reproduction of ATD.csv's RATIO column,
+     which comes from different, unpaired samples. This keeps the whole
+     representation ladder on one consistent sample set.
 
-Model capacity is held FIXED and deliberately compact (hidden=(32,16))
+Model capacity is held fixed and deliberately compact (hidden=(32,16))
 across every representation level for the MLP, and hidden_size=32 for
-the LSTM (the Phase 1 winner) -- so representation is the only thing
-that varies, not model capacity.
+the LSTM (the Phase 1 winner), so representation is the only thing that
+varies, not model capacity.
 """
 
 import json

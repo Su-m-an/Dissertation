@@ -3,19 +3,19 @@ error_analysis.py
 
 Characterizes *where* each model gets it wrong, using the Phase 1 tuned
 models' saved test-set predictions (experiments/phase1_statistical_rigor/
-results/*_test_predictions.csv) -- no retraining needed here.
+results/*_test_predictions.csv). No retraining needed here.
 
 Classical models (TC-SVM/RF/XGBoost): misclassified points plotted in the
-original MEAN/RATIO feature space -- are errors concentrated near the
-decision boundary, or scattered?
+original MEAN/RATIO feature space, to see whether errors are concentrated
+near the decision boundary or scattered.
 
 Sequence models (MLP/LSTM): predicted-probability distributions for
-correct vs. incorrect predictions -- are errors confidently wrong, or
-boundary cases sitting near 0.5?
+correct vs. incorrect predictions, to see whether errors are confidently
+wrong or boundary cases sitting near 0.5.
 
 Autoencoder: reconstruction-error distribution for false negatives
-(missed attacks) vs. true positives -- do missed attacks look like
-"nearly normal" sequences that fall just under the threshold?
+(missed attacks) vs. true positives, to see whether missed attacks look
+like "nearly normal" sequences that fall just under the threshold.
 """
 
 import os

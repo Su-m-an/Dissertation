@@ -23,7 +23,7 @@ in standardized feature space at increasing magnitude (0.25 SD steps up
 to 5.0 SD, 25 random directions per magnitude step); record the smallest
 magnitude at which any direction flips the prediction to "non-attack".
 This is a conservative (upper-bound) estimate of the true minimum
-adversarial distance -- a white-box gradient method would find an equal
+adversarial distance. A white-box gradient method would find an equal
 or smaller distance for the differentiable models. Reported anyway,
 consistently, so relative robustness across models is still meaningful
 even though the absolute numbers are conservative.

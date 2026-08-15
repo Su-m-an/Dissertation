@@ -6,20 +6,20 @@ XGBoost), trained on the MEAN/RATIO features from Data/ATD.csv.
 
 For each model:
   1. Documented hyperparameter search (grid documented in *_search_grid.json).
-     TC-SVM is searched on a stratified 15,000-row subsample (3-fold CV) --
-     RBF-kernel SVM training cost scales roughly O(n^2.2-2.5), and a full
-     grid at the full 184,000-row scale was estimated (from a pilot run) at
-     3-7 hours for the search alone. RF/XGBoost are searched at full scale
-     since tree ensembles are cheap here.
+     TC-SVM is searched on a stratified 15,000-row subsample (3-fold CV),
+     since RBF-kernel SVM training cost scales roughly O(n^2.2-2.5), and a
+     full grid at the full 184,000-row scale was estimated (from a pilot
+     run) at 3-7 hours for the search alone. RF/XGBoost are searched at
+     full scale since tree ensembles are cheap here.
   2. The winning hyperparameters are then evaluated with real stratified
-     5-fold CV *at full scale* for all three models -- this is the number
-     that gets reported, not the subsample search itself.
+     5-fold CV *at full scale* for all three models. That full-scale
+     number is what gets reported, not the subsample search itself.
   3. A final model is refit on the full 80% training split (same split as
      the corrected baseline, random_state=42) and saved, together with its
      predictions on the held-out 20% test set, for the downstream
      statistical-testing and calibration/latency stages.
 
-Writes only under experiments/phase1_statistical_rigor/ -- results/ (the
+Writes only under experiments/phase1_statistical_rigor/. results/ (the
 corrected baseline) is never touched.
 """
 

@@ -7,8 +7,8 @@ runs the documented significance tests.
 Important methodological note, made explicit rather than glossed over:
 TC-SVM/Random Forest/XGBoost are trained and evaluated on Data/ATD.csv
 (184,000 rows, MEAN/RATIO features). MLP/LSTM/Autoencoder are trained and
-evaluated on Data/ATD_sequence.csv (4,000 rows, E1-E50 features) -- a
-different, smaller sample set. That means the two groups' CV folds and
+evaluated on Data/ATD_sequence.csv (4,000 rows, E1-E50 features), a
+different and smaller sample set. That means the two groups' CV folds and
 test-set rows are NOT the same underlying samples, so a *paired* test
 (Wilcoxon on fold pairs, McNemar's on matched predictions) is only valid
 WITHIN each group:
@@ -16,10 +16,10 @@ WITHIN each group:
   - Wilcoxon signed-rank + McNemar's: valid within {TC-SVM, RF, XGBoost}
     and within {MLP, LSTM, Autoencoder}, since each group shares identical
     fold splits and test rows.
-  - Across groups (e.g. "is LSTM significantly better than XGBoost" - the
-    actual headline claim of the whole comparison): NOT a valid paired
-    test. Reported instead with the weaker, unpaired Mann-Whitney U test
-    on fold-level accuracy distributions, explicitly labelled as such.
+  - Across groups (e.g. "is LSTM significantly better than XGBoost," the
+    actual headline claim of the whole comparison): this is NOT a valid
+    paired test. Reported instead with the weaker, unpaired Mann-Whitney U
+    test on fold-level accuracy distributions, explicitly labelled as such.
 
 Wilcoxon signed-rank is used over a paired t-test because a paired t-test
 assumes the per-fold differences are approximately normal, an assumption
@@ -103,7 +103,7 @@ if __name__ == "__main__":
 
             df_a, df_b = preds[a], preds[b]
             assert np.array_equal(df_a["y_true"].values, df_b["y_true"].values), \
-                f"{a} and {b} test sets do not match -- cannot pair"
+                f"{a} and {b} test sets do not match, so they cannot be paired"
             mt = mcnemar_test(df_a["y_true"].values, df_a["y_pred"].values, df_b["y_pred"].values)
 
             entry = {"group": group_name, "model_a": a, "model_b": b,
@@ -112,7 +112,7 @@ if __name__ == "__main__":
             print(f"  [{group_name}] {a} vs {b}: Wilcoxon p={wt['p_value']:.4f}  "
                   f"McNemar p={mt['p_value']:.4f} (b={mt['b']}, c={mt['c']})")
 
-    print("\n=== Cross-group unpaired tests (Mann-Whitney U) -- weaker evidence, see docstring ===")
+    print("\n=== Cross-group unpaired tests (Mann-Whitney U); weaker evidence, see docstring ===")
     for a, b in itertools.product(CLASSICAL, NEURAL):
         ut = mannwhitney_test(cv_acc[a], cv_acc[b])
         summary["cross_group_unpaired_tests"].append({"model_a": a, "model_b": b, "mannwhitney": ut})

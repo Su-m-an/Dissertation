@@ -2,17 +2,17 @@
 cv_tuning_neural.py
 
 Phase 1 statistical rigor for the sequence-based models (MLP, LSTM,
-Autoencoder), trained on the 50-step ATD_sequence.csv (only 4,000 rows,
-so unlike TC-SVM there is no cost reason to subsample -- full-scale grid
-search + full-scale 5-fold CV throughout).
+Autoencoder), trained on the 50-step ATD_sequence.csv. It only has 4,000
+rows, so unlike TC-SVM there is no cost reason to subsample: full-scale
+grid search plus full-scale 5-fold CV throughout.
 
-MLP and LSTM: standard supervised CV -- accuracy is the search/report metric.
-Autoencoder: unsupervised on normal-only training data, so CV score is
-reconstruction-error ROC-AUC (threshold-free) during the search; the full
-CV report additionally computes threshold-based metrics using the same
-normal-only threshold calibration as the corrected baseline
-(src/12_autoencoder.py) -- calibrated on held-out normal rows from each
-fold's own training portion, never on the validation fold.
+MLP and LSTM: standard supervised CV, where accuracy is the search/report
+metric. Autoencoder: unsupervised on normal-only training data, so the CV
+score is reconstruction-error ROC-AUC (threshold-free) during the search.
+The full CV report additionally computes threshold-based metrics using
+the same normal-only threshold calibration as the corrected baseline
+(src/12_autoencoder.py), calibrated on held-out normal rows from each
+fold's own training portion and never on the validation fold.
 
 Writes only under experiments/phase1_statistical_rigor/.
 """

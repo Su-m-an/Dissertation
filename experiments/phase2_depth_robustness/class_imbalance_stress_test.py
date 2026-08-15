@@ -4,9 +4,9 @@ class_imbalance_stress_test.py
 Re-runs all six models at realistic class imbalance (90/10, 95/5, 99/1,
 99.9/0.1 attack ratios) instead of the artificial 50/50 balance of
 ATD.csv / ATD_sequence.csv, to see whether the model comparison holds up
-when attacks are actually rare. Accuracy is NOT the headline metric here
--- at 99/1 a model that always predicts "no attack" scores 99% while
-catching nothing -- so precision, recall, F1, PR-AUC, FPR and FNR lead.
+when attacks are actually rare. Accuracy is NOT the headline metric here:
+at 99/1 a model that always predicts "no attack" scores 99% while
+catching nothing, so precision, recall, F1, PR-AUC, FPR and FNR lead instead.
 
 Design: the non-attack pool is held at its full available size (92,000
 for the classical/ATD.csv models, 2,000 for the neural/ATD_sequence.csv
@@ -15,13 +15,13 @@ whole resampled pool gets a fresh stratified 80/20 split so BOTH train
 and test reflect the target imbalance (evaluating "as deployed", not
 training balanced and testing imbalanced). A ratio is skipped, with the
 reason logged, when the resulting test-set attack count would fall below
-15 -- not enough to trust a rate estimate. This is why the neural models
+15, which isn't enough to trust a rate estimate. This is why the neural models
 only get 90/10 and 95/5: ATD_sequence.csv has only 2,000 attack rows
 total to begin with.
 
 Hyperparameters are fixed to the Phase 1 tuned values for every model
-(experiments/phase1_statistical_rigor/results/*_best_params.json) --
-this experiment varies only the training/test data distribution, not
+(experiments/phase1_statistical_rigor/results/*_best_params.json).
+This experiment varies only the training/test data distribution, not
 the architecture search, which would be its own (expensive) nested study.
 """
 
@@ -281,8 +281,8 @@ def run_neural():
         print(f"  lstm @ {1-ratio:.3f}/{ratio:.3f}: precision={m['precision']:.3f} recall={m['recall']:.3f} "
               f"f1={m['f1']:.3f} pr_auc={m['pr_auc']:.3f} fpr={m['fpr']:.4f} fnr={m['fnr']:.4f}")
 
-        # Autoencoder (trains on normal-only from this ratio's training split;
-        # this is exactly the regime it's meant for -- rare positives)
+        # Autoencoder trains on normal-only data from this ratio's training split;
+        # this is exactly the regime it's meant for, where positives are rare.
         X_normal = X_train_s[y_train == 0]
         X_fit, X_calib = train_test_split(X_normal, test_size=0.20, random_state=SEED)
         model = train_autoencoder(X_fit, **ae_params)
