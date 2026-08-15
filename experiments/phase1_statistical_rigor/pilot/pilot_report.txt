@@ -1,0 +1,54 @@
+Phase 1 pilot - stratified 3-fold CV harness validation
+Seed: 42
+
+=== Reproducibility check: TC-SVM (same seed, two runs) ===
+
+=== TC-SVM pilot (classical / ATD.csv) ===
+  [SVM fold 1] train/val index overlap: 0 (OK)
+  [SVM fold 1] acc=0.9230 f1=0.9199 (scaler mean=[75.65240691 77.85689624])
+  [SVM fold 2] train/val index overlap: 0 (OK)
+  [SVM fold 2] acc=0.9150 f1=0.9104 (scaler mean=[76.32678043 79.21808654])
+  [SVM fold 3] train/val index overlap: 0 (OK)
+  [SVM fold 3] acc=0.9160 f1=0.9129 (scaler mean=[76.11958853 78.58531338])
+  Distinct per-fold scaler means: 3 / 3 (>1 confirms per-fold refit)
+  SVM pilot wall time (3 folds, n=3000): 0.13s
+
+=== TC-SVM pilot (classical / ATD.csv) ===
+  [SVM fold 1] train/val index overlap: 0 (OK)
+  [SVM fold 1] acc=0.9230 f1=0.9199 (scaler mean=[75.65240691 77.85689624])
+  [SVM fold 2] train/val index overlap: 0 (OK)
+  [SVM fold 2] acc=0.9150 f1=0.9104 (scaler mean=[76.32678043 79.21808654])
+  [SVM fold 3] train/val index overlap: 0 (OK)
+  [SVM fold 3] acc=0.9160 f1=0.9129 (scaler mean=[76.11958853 78.58531338])
+  Distinct per-fold scaler means: 3 / 3 (>1 confirms per-fold refit)
+  SVM pilot wall time (3 folds, n=3000): 0.12s
+  Run 1 == Run 2 (bitwise metric match): True
+
+=== Reproducibility check: MLP (same seed, two runs) ===
+
+=== MLP pilot (sequence / ATD_sequence.csv) ===
+  [MLP fold 1] train/val index overlap: 0 (OK)
+  [MLP fold 1] acc=0.9858 f1=0.9857
+  [MLP fold 2] train/val index overlap: 0 (OK)
+  [MLP fold 2] acc=0.9902 f1=0.9903
+  [MLP fold 3] train/val index overlap: 0 (OK)
+  [MLP fold 3] acc=0.9880 f1=0.9880
+  Distinct per-fold scaler means: 3 / 3
+  MLP pilot wall time (3 folds, n=4000, 10 epochs): 1.59s
+
+=== MLP pilot (sequence / ATD_sequence.csv) ===
+  [MLP fold 1] train/val index overlap: 0 (OK)
+  [MLP fold 1] acc=0.9858 f1=0.9857
+  [MLP fold 2] train/val index overlap: 0 (OK)
+  [MLP fold 2] acc=0.9902 f1=0.9903
+  [MLP fold 3] train/val index overlap: 0 (OK)
+  [MLP fold 3] acc=0.9880 f1=0.9880
+  Distinct per-fold scaler means: 3 / 3
+  MLP pilot wall time (3 folds, n=4000, 10 epochs): 1.02s
+  Run 1 == Run 2 (bitwise metric match): True
+
+=== Summary ===
+SVM pilot accuracy: 0.9180 +/- 0.0036 (n=3000, k=3)
+MLP pilot accuracy: 0.9880 +/- 0.0018 (n=4000, k=3)
+
+All leakage, refit, and reproducibility checks PASSED.

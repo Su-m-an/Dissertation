@@ -1,0 +1,43 @@
+{
+  "seed": 42,
+  "k_folds": 3,
+  "svm_pilot": [
+    {
+      "fold": 1,
+      "accuracy": 0.923,
+      "f1": 0.9198751300728408
+    },
+    {
+      "fold": 2,
+      "accuracy": 0.915,
+      "f1": 0.9104320337197049
+    },
+    {
+      "fold": 3,
+      "accuracy": 0.916,
+      "f1": 0.9128630705394191
+    }
+  ],
+  "mlp_pilot": [
+    {
+      "fold": 1,
+      "accuracy": 0.9857571214392804,
+      "f1": 0.9857464366091523
+    },
+    {
+      "fold": 2,
+      "accuracy": 0.9902475618904726,
+      "f1": 0.9902621722846442
+    },
+    {
+      "fold": 3,
+      "accuracy": 0.9879969992498124,
+      "f1": 0.9880059970014993
+    }
+  ],
+  "checks_passed": [
+    "no_train_val_index_overlap",
+    "per_fold_scaler_refit_confirmed",
+    "reproducible_across_repeated_runs"
+  ]
+}

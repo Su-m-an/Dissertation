@@ -1,0 +1,46 @@
+{
+  "grid": {
+    "hidden_size": [
+      32,
+      64,
+      128
+    ],
+    "lr": [
+      0.0005,
+      0.001
+    ]
+  },
+  "results": [
+    {
+      "hidden_size": 32,
+      "lr": 0.0005,
+      "cv_accuracy": 0.99125
+    },
+    {
+      "hidden_size": 32,
+      "lr": 0.001,
+      "cv_accuracy": 0.990625
+    },
+    {
+      "hidden_size": 64,
+      "lr": 0.0005,
+      "cv_accuracy": 0.9881249999999999
+    },
+    {
+      "hidden_size": 64,
+      "lr": 0.001,
+      "cv_accuracy": 0.9875
+    },
+    {
+      "hidden_size": 128,
+      "lr": 0.0005,
+      "cv_accuracy": 0.9893750000000001
+    },
+    {
+      "hidden_size": 128,
+      "lr": 0.001,
+      "cv_accuracy": 0.9871874999999999
+    }
+  ],
+  "search_time_s": 574.1943249702454
+}

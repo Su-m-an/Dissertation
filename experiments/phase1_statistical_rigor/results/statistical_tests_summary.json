@@ -1,0 +1,188 @@
+{
+  "cv_accuracy_mean_std": {
+    "tc_svm": {
+      "mean": 0.9424796195652174,
+      "std": 0.00141731560505701
+    },
+    "random_forest": {
+      "mean": 0.9424728260869566,
+      "std": 0.0009186531059460931
+    },
+    "xgboost": {
+      "mean": 0.9427173913043477,
+      "std": 0.0010490591106902044
+    },
+    "mlp": {
+      "mean": 0.9896875000000002,
+      "std": 0.0021194781197266537
+    },
+    "lstm": {
+      "mean": 0.99125,
+      "std": 0.002338535866733711
+    },
+    "autoencoder": {
+      "mean": 0.9625,
+      "std": 0.006171380518166114
+    }
+  },
+  "within_group_paired_tests": [
+    {
+      "group": "classical",
+      "model_a": "tc_svm",
+      "model_b": "random_forest",
+      "wilcoxon": {
+        "statistic": 6.0,
+        "p_value": 0.8125
+      },
+      "mcnemar": {
+        "b": 122,
+        "c": 143,
+        "p_value": 0.2191521851313348
+      }
+    },
+    {
+      "group": "classical",
+      "model_a": "tc_svm",
+      "model_b": "xgboost",
+      "wilcoxon": {
+        "statistic": 3.0,
+        "p_value": 0.3125
+      },
+      "mcnemar": {
+        "b": 108,
+        "c": 119,
+        "p_value": 0.5069556871220086
+      }
+    },
+    {
+      "group": "classical",
+      "model_a": "random_forest",
+      "model_b": "xgboost",
+      "wilcoxon": {
+        "statistic": 4.0,
+        "p_value": 0.4375
+      },
+      "mcnemar": {
+        "b": 85,
+        "c": 75,
+        "p_value": 0.47688215872526785
+      }
+    },
+    {
+      "group": "neural",
+      "model_a": "mlp",
+      "model_b": "lstm",
+      "wilcoxon": {
+        "statistic": 4.0,
+        "p_value": 0.4375
+      },
+      "mcnemar": {
+        "b": 1,
+        "c": 5,
+        "p_value": 0.21875
+      }
+    },
+    {
+      "group": "neural",
+      "model_a": "mlp",
+      "model_b": "autoencoder",
+      "wilcoxon": {
+        "statistic": 0.0,
+        "p_value": 0.0625
+      },
+      "mcnemar": {
+        "b": 15,
+        "c": 3,
+        "p_value": 0.007537841796875
+      }
+    },
+    {
+      "group": "neural",
+      "model_a": "lstm",
+      "model_b": "autoencoder",
+      "wilcoxon": {
+        "statistic": 0.0,
+        "p_value": 0.0625
+      },
+      "mcnemar": {
+        "b": 17,
+        "c": 1,
+        "p_value": 0.00014495849609375
+      }
+    }
+  ],
+  "cross_group_unpaired_tests": [
+    {
+      "model_a": "tc_svm",
+      "model_b": "mlp",
+      "mannwhitney": {
+        "statistic": 0.0,
+        "p_value": 0.010909498364269283
+      }
+    },
+    {
+      "model_a": "tc_svm",
+      "model_b": "lstm",
+      "mannwhitney": {
+        "statistic": 0.0,
+        "p_value": 0.011412036386001651
+      }
+    },
+    {
+      "model_a": "tc_svm",
+      "model_b": "autoencoder",
+      "mannwhitney": {
+        "statistic": 0.0,
+        "p_value": 0.011667312343319386
+      }
+    },
+    {
+      "model_a": "random_forest",
+      "model_b": "mlp",
+      "mannwhitney": {
+        "statistic": 0.0,
+        "p_value": 0.010909498364269283
+      }
+    },
+    {
+      "model_a": "random_forest",
+      "model_b": "lstm",
+      "mannwhitney": {
+        "statistic": 0.0,
+        "p_value": 0.011412036386001651
+      }
+    },
+    {
+      "model_a": "random_forest",
+      "model_b": "autoencoder",
+      "mannwhitney": {
+        "statistic": 0.0,
+        "p_value": 0.011667312343319386
+      }
+    },
+    {
+      "model_a": "xgboost",
+      "model_b": "mlp",
+      "mannwhitney": {
+        "statistic": 0.0,
+        "p_value": 0.011159425282914755
+      }
+    },
+    {
+      "model_a": "xgboost",
+      "model_b": "lstm",
+      "mannwhitney": {
+        "statistic": 0.0,
+        "p_value": 0.011667312343319386
+      }
+    },
+    {
+      "model_a": "xgboost",
+      "model_b": "autoencoder",
+      "mannwhitney": {
+        "statistic": 0.0,
+        "p_value": 0.0119252335930176
+      }
+    }
+  ]
+}

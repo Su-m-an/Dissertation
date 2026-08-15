@@ -1,0 +1,94 @@
+{
+  "grid": {
+    "n_estimators": [
+      100,
+      200
+    ],
+    "max_depth": [
+      4,
+      6,
+      8
+    ],
+    "learning_rate": [
+      0.05,
+      0.1
+    ]
+  },
+  "results": [
+    {
+      "learning_rate": 0.05,
+      "max_depth": 4,
+      "n_estimators": 100,
+      "cv_accuracy": 0.9426222826086956
+    },
+    {
+      "learning_rate": 0.05,
+      "max_depth": 4,
+      "n_estimators": 200,
+      "cv_accuracy": 0.9426222826086956
+    },
+    {
+      "learning_rate": 0.05,
+      "max_depth": 6,
+      "n_estimators": 100,
+      "cv_accuracy": 0.9426222826086956
+    },
+    {
+      "learning_rate": 0.05,
+      "max_depth": 6,
+      "n_estimators": 200,
+      "cv_accuracy": 0.9425339673913044
+    },
+    {
+      "learning_rate": 0.05,
+      "max_depth": 8,
+      "n_estimators": 100,
+      "cv_accuracy": 0.9420108695652173
+    },
+    {
+      "learning_rate": 0.05,
+      "max_depth": 8,
+      "n_estimators": 200,
+      "cv_accuracy": 0.941976902173913
+    },
+    {
+      "learning_rate": 0.1,
+      "max_depth": 4,
+      "n_estimators": 100,
+      "cv_accuracy": 0.9427173913043478
+    },
+    {
+      "learning_rate": 0.1,
+      "max_depth": 4,
+      "n_estimators": 200,
+      "cv_accuracy": 0.9424932065217391
+    },
+    {
+      "learning_rate": 0.1,
+      "max_depth": 6,
+      "n_estimators": 100,
+      "cv_accuracy": 0.9425271739130435
+    },
+    {
+      "learning_rate": 0.1,
+      "max_depth": 6,
+      "n_estimators": 200,
+      "cv_accuracy": 0.9421671195652175
+    },
+    {
+      "learning_rate": 0.1,
+      "max_depth": 8,
+      "n_estimators": 100,
+      "cv_accuracy": 0.9419497282608695
+    },
+    {
+      "learning_rate": 0.1,
+      "max_depth": 8,
+      "n_estimators": 200,
+      "cv_accuracy": 0.941508152173913
+    }
+  ],
+  "search_time_s": 12.992236852645874,
+  "searched_on_subsample": false,
+  "search_k": 5
+}

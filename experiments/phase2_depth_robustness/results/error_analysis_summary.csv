@@ -1,0 +1,7 @@
+model,n_errors,false_positives,false_negatives,boundary_errors_0.3to0.7,confident_wrong_errors,fn_mean_recon_error,tp_mean_recon_error
+tc_svm,2100,786,1314,,,,
+random_forest,2079,842,1237,,,,
+xgboost,2089,867,1222,,,,
+mlp,10,4,6,1.0,9.0,,
+lstm,6,3,3,2.0,4.0,,
+autoencoder,22,18,4,,,1.4067499249999997,4.516856940656566
